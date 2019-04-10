@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="Welcome_message">Welcome to Hify</string>
+    <string name="Welcome_message">Welcome to S.P.I.T Alumni Portal</string>
     <string name="register_message">Create a new Account</string>
     <string name="loading_name">Loading Name...</string>
 
@@ -63,6 +63,6 @@
     <string name="edittext_hint">Enter your question here</string>
     <string name="status">I am currently using my %s eye</string>
     <string name="ai_name">I am not named yet but i know that i am an Artificial Intelligence</string>
-    <string name="ai_author_name">I was created by Amsavarthan Lv</string>
+    <string name="ai_author_name">I was created by Sardar patel Institute of Technology</string>
 
 </resources>
