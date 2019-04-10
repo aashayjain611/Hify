@@ -1,30 +1,19 @@
 package com.amsavarthan.hify.ui.fragment;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Fragment;
-import android.app.ProgressDialog;
-import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.renderscript.Matrix2f;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +22,6 @@ import com.amsavarthan.hify.R;
 import com.amsavarthan.hify.adapters.PostsAdapter;
 import com.amsavarthan.hify.adapters.PostsAdapter_v19;
 import com.amsavarthan.hify.models.Post;
-import com.amsavarthan.hify.ui.activities.MainActivity;
-import com.amsavarthan.hify.utils.database.UserHelper;
 import com.github.javiersantos.bottomdialogs.BottomDialog;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,11 +32,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.tylersuehr.esr.EmptyStateRecyclerView;
-import com.tylersuehr.esr.ImageTextStateDisplay;
 import com.tylersuehr.esr.TextStateDisplay;
 
 import java.util.ArrayList;
@@ -58,10 +43,6 @@ import java.util.List;
 import static com.amsavarthan.hify.ui.activities.MainActivity.currentuser;
 import static com.amsavarthan.hify.ui.activities.MainActivity.showFragment;
 import static com.amsavarthan.hify.ui.activities.MainActivity.toolbar;
-
-/**
- * Created by amsavarthan on 29/3/18.
- */
 
 public class Dashboard extends Fragment {
 

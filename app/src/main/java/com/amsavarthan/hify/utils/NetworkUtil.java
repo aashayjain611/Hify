@@ -4,10 +4,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-/**
- * Created by amsavarthan on 2/3/18.
- */
-
 public class NetworkUtil {
     public static int TYPE_WIFI = 1;
     public static int TYPE_MOBILE = 2;

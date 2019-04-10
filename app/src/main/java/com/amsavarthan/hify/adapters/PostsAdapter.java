@@ -77,12 +77,6 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.grantland.widget.AutofitTextView;
 
-
-
-/**
- * Created by amsavarthan on 22/2/18.
- */
-
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
     private List<Post> postList;

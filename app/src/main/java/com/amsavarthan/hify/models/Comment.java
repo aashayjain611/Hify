@@ -1,9 +1,5 @@
 package com.amsavarthan.hify.models;
 
-/**
- * Created by amsavarthan on 6/4/18.
- */
-
 public class Comment extends CommentId {
 
     private String id,image,username, post_id, comment, timestamp;

@@ -2,7 +2,6 @@ package com.amsavarthan.hify.ui.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -13,39 +12,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amsavarthan.hify.R;
 import com.amsavarthan.hify.adapters.MessageImageAdapter;
 import com.amsavarthan.hify.adapters.MessageImageReplyAdapter;
 import com.amsavarthan.hify.adapters.MessageTextAdapter;
 import com.amsavarthan.hify.adapters.MessageTextReplyAdapter;
-import com.amsavarthan.hify.adapters.UsersAdapter;
 import com.amsavarthan.hify.models.Message;
 import com.amsavarthan.hify.models.MessageReply;
-import com.amsavarthan.hify.models.Users;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.tylersuehr.esr.EmptyStateRecyclerView;
-import com.tylersuehr.esr.ImageTextStateDisplay;
 import com.tylersuehr.esr.TextStateDisplay;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.View.GONE;
-
-/**
- * Created by amsavarthan on 29/3/18.
- */
 
 public class MessageHistory extends Fragment {
 

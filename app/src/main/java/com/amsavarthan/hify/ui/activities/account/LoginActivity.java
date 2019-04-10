@@ -13,7 +13,6 @@ import android.text.TextUtils;
 import android.transition.Fade;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -45,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public static Activity activity;
     private EditText email,password;
-    private Button login,register;
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
     private UserHelper userHelper;

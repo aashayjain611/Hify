@@ -4,10 +4,6 @@ import android.support.annotation.NonNull;
 
 import java.util.Random;
 
-/**
- * Created by amsavarthan on 10/3/18.
- */
-
 public class Config {
 
     // global topic to receive app wide push notifications

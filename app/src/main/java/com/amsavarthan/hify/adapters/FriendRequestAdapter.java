@@ -29,10 +29,6 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * Created by amsavarthan on 22/2/18.
- */
-
 public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdapter.ViewHolder> {
 
     public static Activity activity;

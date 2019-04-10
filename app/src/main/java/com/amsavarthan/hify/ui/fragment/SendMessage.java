@@ -24,14 +24,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.tylersuehr.esr.EmptyStateRecyclerView;
-import com.tylersuehr.esr.ImageTextStateDisplay;
 import com.tylersuehr.esr.TextStateDisplay;
 
 import java.util.ArrayList;
 import java.util.List;
-/**
- * Created by amsavarthan on 29/3/18.
- */
 
 public class SendMessage extends Fragment {
 

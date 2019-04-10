@@ -2,10 +2,6 @@ package com.amsavarthan.hify.models;
 
 import android.content.Intent;
 
-/**
- * Created by amsavarthan on 15/3/18.
- */
-
 public class Extras {
 
     public String title, subtitle;

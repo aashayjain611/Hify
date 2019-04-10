@@ -14,33 +14,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.amsavarthan.hify.R;
 import com.amsavarthan.hify.adapters.viewFriends.RecyclerViewTouchHelper;
 import com.amsavarthan.hify.adapters.viewFriends.ViewFriendAdapter;
-import com.amsavarthan.hify.models.Users;
 import com.amsavarthan.hify.models.ViewFriends;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.tylersuehr.esr.EmptyStateRecyclerView;
 import com.tylersuehr.esr.TextStateDisplay;
-import com.tylersuehr.esr.TextStateDisplay;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by amsavarthan on 29/3/18.
- */
 
 public class Friends extends Fragment {
 

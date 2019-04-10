@@ -7,11 +7,6 @@ import android.view.ViewGroup;
 import com.amsavarthan.hify.adapters.DrawerAdapter;
 import com.amsavarthan.hify.models.DrawerItem;
 
-/**
- * Created by amsavarthan on 29/3/18.
- */
-
-
 public class SpaceItem extends DrawerItem<SpaceItem.ViewHolder> {
 
     private int spaceDp;

@@ -31,10 +31,6 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * Created by amsavarthan on 22/2/18.
- */
-
 public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapter.ViewHolder> {
 
     private List<Friends> usersList;

@@ -8,7 +8,7 @@ android {
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.amsavarthan.hify"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
         versionName "beta5.r3"

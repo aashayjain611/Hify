@@ -4,11 +4,6 @@ import android.view.ViewGroup;
 
 import com.amsavarthan.hify.adapters.DrawerAdapter;
 
-/**
- * Created by amsavarthan on 29/3/18.
- */
-
-
 public abstract class DrawerItem<T extends DrawerAdapter.ViewHolder> {
 
     protected boolean isChecked;

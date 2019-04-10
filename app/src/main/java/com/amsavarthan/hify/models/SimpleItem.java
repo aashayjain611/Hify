@@ -10,10 +10,6 @@ import android.widget.TextView;
 import com.amsavarthan.hify.R;
 import com.amsavarthan.hify.adapters.DrawerAdapter;
 
-/**
- * Created by amsavarthan on 29/3/18.
- */
-
 public class SimpleItem extends DrawerItem<SimpleItem.ViewHolder> {
 
     private int selectedItemIconTint;

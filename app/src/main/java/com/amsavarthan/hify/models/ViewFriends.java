@@ -1,9 +1,5 @@
 package com.amsavarthan.hify.models;
 
-/**
- * Created by amsavarthan on 22/2/18.
- */
-
 public class ViewFriends {
 
     private String id,username, name, image, email, token_id;

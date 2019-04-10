@@ -4,24 +4,18 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
-import android.text.TextUtils;
-import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-
 import com.amsavarthan.hify.R;
 import com.amsavarthan.hify.feature_ai.adapter.SolutionAdapter;
 import com.amsavarthan.hify.feature_ai.api.WolframAlphaAPI;
@@ -30,7 +24,6 @@ import com.amsavarthan.hify.feature_ai.utils.RecentsDatabase;
 import com.amsavarthan.hify.feature_ai.utils.Utils;
 import com.amsavarthan.hify.ui.activities.post.PostText;
 
-
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -38,7 +31,6 @@ import java.util.Locale;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
 
 public class ResultActivity extends AppCompatActivity {
 

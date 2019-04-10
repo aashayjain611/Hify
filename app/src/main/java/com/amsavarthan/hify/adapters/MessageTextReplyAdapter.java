@@ -13,10 +13,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.amsavarthan.hify.R;
-import com.amsavarthan.hify.models.Message;
 import com.amsavarthan.hify.models.MessageReply;
-import com.amsavarthan.hify.ui.activities.notification.NotificationActivity;
-import com.amsavarthan.hify.ui.activities.notification.NotificationImage;
 import com.amsavarthan.hify.ui.activities.notification.NotificationReplyActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -31,10 +28,6 @@ import java.util.List;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-/**
- * Created by amsavarthan on 22/2/18.
- */
 
 public class MessageTextReplyAdapter extends RecyclerView.Adapter<MessageTextReplyAdapter.ViewHolder> {
 

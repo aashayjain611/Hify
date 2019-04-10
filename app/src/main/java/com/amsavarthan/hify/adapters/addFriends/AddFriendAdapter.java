@@ -1,7 +1,5 @@
 package com.amsavarthan.hify.adapters.addFriends;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -32,10 +30,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-/**
- * Created by amsavarthan on 22/2/18.
- */
 
 public class AddFriendAdapter extends RecyclerView.Adapter<AddFriendAdapter.ViewHolder> {
 

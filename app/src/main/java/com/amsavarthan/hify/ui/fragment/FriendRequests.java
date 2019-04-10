@@ -2,24 +2,19 @@ package com.amsavarthan.hify.ui.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.amsavarthan.hify.R;
 import com.amsavarthan.hify.adapters.FriendRequestAdapter;
 import com.amsavarthan.hify.models.FriendRequest;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -32,10 +27,6 @@ import com.tylersuehr.esr.TextStateDisplay;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by amsavarthan on 29/3/18.
- */
 
 public class FriendRequests extends Fragment {
 

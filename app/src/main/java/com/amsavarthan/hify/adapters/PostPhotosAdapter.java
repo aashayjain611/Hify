@@ -13,7 +13,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -23,13 +22,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.amsavarthan.hify.R;
 import com.amsavarthan.hify.models.MultipleImage;
-import com.amsavarthan.hify.ui.activities.notification.ImagePreview;
 import com.amsavarthan.hify.ui.activities.notification.ImagePreviewSave;
 import com.amsavarthan.hify.ui.views.HifyImageView;
 import com.bumptech.glide.Glide;
@@ -39,17 +35,14 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import id.zelory.compressor.Compressor;
-
 
 public class PostPhotosAdapter extends PagerAdapter {
 

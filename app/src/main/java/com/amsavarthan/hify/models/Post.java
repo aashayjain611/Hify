@@ -1,12 +1,5 @@
 package com.amsavarthan.hify.models;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
-/**
- * Created by amsavarthan on 4/4/18.
- */
-
 public class Post extends PostId {
 
     private String userId,name, timestamp, likes, favourites, description, color,username,userimage;

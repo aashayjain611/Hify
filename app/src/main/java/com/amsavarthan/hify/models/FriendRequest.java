@@ -1,9 +1,5 @@
 package com.amsavarthan.hify.models;
 
-/**
- * Created by amsavarthan on 11/3/18.
- */
-
 public class FriendRequest extends UserId {
 
     private String id,username, name, email, image, token,timestamp;

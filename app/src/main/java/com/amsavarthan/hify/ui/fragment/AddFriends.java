@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -16,37 +15,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.amsavarthan.hify.R;
 import com.amsavarthan.hify.adapters.addFriends.AddFriendAdapter;
 import com.amsavarthan.hify.adapters.addFriends.RecyclerViewTouchHelper;
 import com.amsavarthan.hify.models.Friends;
-import com.amsavarthan.hify.models.ViewFriends;
-import com.amsavarthan.hify.ui.activities.friends.SearchUsersActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.tylersuehr.esr.EmptyStateRecyclerView;
-import com.tylersuehr.esr.TextStateDisplay;
 import com.tylersuehr.esr.TextStateDisplay;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.View.GONE;
-
-/**
- * Created by amsavarthan on 29/3/18.
- */
 
 public class AddFriends extends Fragment {
 

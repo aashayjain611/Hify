@@ -1,9 +1,5 @@
 package com.amsavarthan.hify.models;
 
-/**
- * Created by amsavarthan on 22/2/18.
- */
-
 public class Users extends UserId {
 
     private String name,image;

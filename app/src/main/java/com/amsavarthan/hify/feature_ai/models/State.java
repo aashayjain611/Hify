@@ -2,8 +2,8 @@ package com.amsavarthan.hify.feature_ai.models;
 
 public class State {
 
-    String solution_title,name,input;
-    String query;
+    private String solution_title,name,input;
+    private String query;
 
     public String getQuery() {
         return query;

@@ -2,6 +2,7 @@ package com.amsavarthan.hify.ui.fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,13 +16,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.app.Fragment;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -29,7 +28,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -42,7 +40,6 @@ import com.amsavarthan.hify.adapters.PostsAdapter;
 import com.amsavarthan.hify.adapters.PostsAdapter_v19;
 import com.amsavarthan.hify.models.Post;
 import com.amsavarthan.hify.ui.activities.MainActivity;
-import com.amsavarthan.hify.ui.activities.account.RegisterActivity;
 import com.amsavarthan.hify.ui.activities.notification.ImagePreview;
 import com.amsavarthan.hify.utils.AnimationUtil;
 import com.amsavarthan.hify.utils.database.UserHelper;
@@ -52,7 +49,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -68,31 +64,25 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.tylersuehr.esr.EmptyStateRecyclerView;
 import com.tylersuehr.esr.TextStateDisplay;
-import com.tylersuehr.esr.TextStateDisplay;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * Created by amsavarthan on 29/3/18.
- */
-
 public class ProfileFragment extends Fragment {
 
-    View mView;
+    private View mView;
 
     @Nullable
     @Override
@@ -214,7 +204,7 @@ public class ProfileFragment extends Fragment {
         private void getPosts() {
 
             FirebaseFirestore.getInstance().collection("Posts")
-                    .whereEqualTo("userId",FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .whereEqualTo("userId", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
                     .orderBy("timestamp", Query.Direction.DESCENDING)
                     .get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -275,7 +265,7 @@ public class ProfileFragment extends Fragment {
 
             postList=new ArrayList<>();
 
-            statsheetView = ((AppCompatActivity)getActivity()).getLayoutInflater().inflate(R.layout.stat_bottom_sheet_dialog, null);
+            statsheetView = getActivity().getLayoutInflater().inflate(R.layout.stat_bottom_sheet_dialog, null);
             mmBottomSheetDialog = new BottomSheetDialog(rootView.getContext());
             mmBottomSheetDialog.setContentView(statsheetView);
             mmBottomSheetDialog.setCanceledOnTouchOutside(true);
@@ -310,7 +300,7 @@ public class ProfileFragment extends Fragment {
         private void getPosts() {
 
             FirebaseFirestore.getInstance().collection("Users")
-                    .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .document(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
                     .collection("Saved_Posts")
                     .orderBy("timestamp", Query.Direction.DESCENDING)
                     .get()
@@ -395,7 +385,7 @@ public class ProfileFragment extends Fragment {
         private FirebaseFirestore mFirestore;
         private UserHelper userHelper;
 
-        private TextView name,username,email,location,post,friend,bio,created;
+        private TextView name,username,email,location,post,friend,bio;
         private CircleImageView profile_pic;
 
         public AboutFragment() {
@@ -420,7 +410,7 @@ public class ProfileFragment extends Fragment {
             bio=rootView.findViewById(R.id.bio);
 
             mFirestore.collection("Users")
-                    .document(mAuth.getCurrentUser().getUid())
+                    .document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid())
                     .collection("Friends")
                     .get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -498,6 +488,14 @@ public class ProfileFragment extends Fragment {
         private AuthCredential credential;
         private static final int PICK_IMAGE =100 ;
 
+        private String usernam;
+        private String nam;
+        private String emai;
+        private String imag;
+        private String bi;
+        private String loc;
+        private String pass;
+
         private Uri imageUri=null;
         private View rootView;
 
@@ -527,13 +525,16 @@ public class ProfileFragment extends Fragment {
             Cursor rs = userHelper.getData(1);
             rs.moveToFirst();
 
-            final String usernam=rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_USERNAME));
-            final String nam = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_NAME));
-            final String emai = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_EMAIL));
-            final String imag = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_IMAGE));
-            final String bi = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_BIO));
-            final String loc = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_LOCATION));
-            final String pass = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_PASS));
+            while(rs.moveToNext())
+            {
+                usernam=rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_USERNAME));
+                nam = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_NAME));
+                emai = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_EMAIL));
+                imag = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_IMAGE));
+                bi = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_BIO));
+                loc = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_LOCATION));
+                pass = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_PASS));
+            }
 
             if (!rs.isClosed()) {
                 rs.close();
@@ -599,7 +600,7 @@ public class ProfileFragment extends Fragment {
                                                                         dialog.setCanceledOnTouchOutside(false);
                                                                         dialog.show();
 
-                                                                        mAuth.getCurrentUser().updatePassword(input.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                        Objects.requireNonNull(mAuth.getCurrentUser()).updatePassword(input.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                             @Override
                                                                             public void onSuccess(Void aVoid) {
                                                                                 dialog.dismiss();
@@ -688,7 +689,7 @@ public class ProfileFragment extends Fragment {
 
                     if(isOnline()){
 
-                        final DocumentReference userDocument=mFirestore.collection("Users").document(mAuth.getCurrentUser().getUid());
+                        final DocumentReference userDocument=mFirestore.collection("Users").document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
 
                         if(imageUri!=null){
 
@@ -765,7 +766,7 @@ public class ProfileFragment extends Fragment {
                                                 final FirebaseUser currentuser=mAuth.getCurrentUser();
 
                                                 credential = EmailAuthProvider
-                                                        .getCredential(currentuser.getEmail(), input.toString());
+                                                        .getCredential(Objects.requireNonNull(currentuser.getEmail()), input.toString());
 
                                                 currentuser.reauthenticate(credential)
                                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -816,7 +817,7 @@ public class ProfileFragment extends Fragment {
 
                                                                         } else {
 
-                                                                            Log.e("Update email error", task.getException().getMessage() + "..");
+                                                                            Log.e("Update email error", Objects.requireNonNull(task.getException()).getMessage() + "..");
                                                                             dialog.dismiss();
 
                                                                         }
@@ -1067,6 +1068,7 @@ public class ProfileFragment extends Fragment {
         public boolean isOnline() {
             ConnectivityManager cm =
                     (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+            assert cm != null;
             NetworkInfo netInfo = cm.getActiveNetworkInfo();
             return netInfo != null && netInfo.isConnectedOrConnecting();
         }
@@ -1094,7 +1096,7 @@ public class ProfileFragment extends Fragment {
             if (requestCode == UCrop.REQUEST_CROP) {
                 if (resultCode == RESULT_OK) {
                     try {
-                        File compressedFile= new Compressor(rootView.getContext()).setCompressFormat(Bitmap.CompressFormat.PNG).setQuality(50).setMaxHeight(96).setMaxWidth(96).compressToFile(new File(UCrop.getOutput(data).getPath()));
+                        File compressedFile= new Compressor(rootView.getContext()).setCompressFormat(Bitmap.CompressFormat.PNG).setQuality(50).setMaxHeight(96).setMaxWidth(96).compressToFile(new File(Objects.requireNonNull(Objects.requireNonNull(UCrop.getOutput(data)).getPath())));
                         profile_pic.setImageURI(Uri.fromFile(compressedFile));
 						imageUri=Uri.fromFile(compressedFile);
                         Toast.makeText(rootView.getContext(), "Profile picture uploaded, click Save details button to apply changes", Toast.LENGTH_LONG).show();
@@ -1105,7 +1107,7 @@ public class ProfileFragment extends Fragment {
                         imageUri = UCrop.getOutput(data);
                     }
                 } else if (resultCode == UCrop.RESULT_ERROR) {
-                    Log.e("Error", "Crop error:" + UCrop.getError(data).getMessage());
+                    Log.e("Error", "Crop error:" + Objects.requireNonNull(UCrop.getError(data)).getMessage());
                 }
             }
 

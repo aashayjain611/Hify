@@ -8,15 +8,14 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 
 import com.amsavarthan.hify.feature_ai.activities.AnswersActivity;
-import com.amsavarthan.hify.ui.activities.account.UpdateAvailable;
 import com.amsavarthan.hify.ui.activities.MainActivity;
+import com.amsavarthan.hify.ui.activities.account.UpdateAvailable;
 import com.amsavarthan.hify.ui.activities.friends.FriendProfile;
 import com.amsavarthan.hify.ui.activities.lottie.FestivalActivity;
 import com.amsavarthan.hify.ui.activities.notification.NotificationActivity;
 import com.amsavarthan.hify.ui.activities.notification.NotificationImage;
 import com.amsavarthan.hify.ui.activities.notification.NotificationImageReply;
 import com.amsavarthan.hify.ui.activities.notification.NotificationReplyActivity;
-import com.amsavarthan.hify.ui.activities.post.CommentsActivity;
 import com.amsavarthan.hify.utils.Config;
 import com.amsavarthan.hify.utils.NotificationUtil;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -24,10 +23,6 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-/**
- * Created by amsavarthan on 10/3/18.
- */
 
 public class FCMService extends FirebaseMessagingService {
 

@@ -28,10 +28,6 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * Created by amsavarthan on 22/2/18.
- */
-
 public class MessageTextAdapter extends RecyclerView.Adapter<MessageTextAdapter.ViewHolder> {
 
     private List<Message> messageList;

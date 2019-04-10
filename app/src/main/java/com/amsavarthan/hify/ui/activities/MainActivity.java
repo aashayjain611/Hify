@@ -115,10 +115,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-/**
- * Created by amsavarthan on 29/3/18.
- */
-
 public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener {
 
     private static final int POS_DASHBOARD = 0;

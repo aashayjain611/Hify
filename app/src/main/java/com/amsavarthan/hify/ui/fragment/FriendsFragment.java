@@ -14,10 +14,6 @@ import android.view.ViewGroup;
 import com.amsavarthan.hify.R;
 import com.amsavarthan.hify.ui.activities.friends.SearchUsersActivity;
 
-/**
- * Created by amsavarthan on 29/3/18.
- */
-
 public class FriendsFragment extends Fragment implements BottomNavigationView.OnNavigationItemReselectedListener,
 BottomNavigationView.OnNavigationItemSelectedListener{
 

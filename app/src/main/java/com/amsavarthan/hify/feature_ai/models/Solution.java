@@ -1,19 +1,18 @@
 package com.amsavarthan.hify.feature_ai.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Solution {
 
-    String title;
-    String description;
-    boolean isDefaultCard,isStateResult,isStepbyStepSolution;
-    String src;
+    private String title;
+    private String description;
+    private boolean isDefaultCard,isStateResult,isStepbyStepSolution;
+    private String src;
     public List<String> state_input;
     public List<String> state_name;
-    int state_count;
-    int height,width;
-    String input;
+    private int state_count;
+    private int height,width;
+    private String input;
 
 
     public boolean isStepbyStepSolution() {

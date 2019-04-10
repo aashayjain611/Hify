@@ -34,10 +34,6 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * Created by amsavarthan on 22/2/18.
- */
-
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
 
     private List<Comment> commentList;
