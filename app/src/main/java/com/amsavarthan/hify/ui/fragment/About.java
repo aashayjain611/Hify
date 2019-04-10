@@ -35,17 +35,15 @@ public class About extends Fragment {
 
         email=mView.findViewById(R.id.email);
         website=mView.findViewById(R.id.website);
-        instagram=mView.findViewById(R.id.instagram);
-        google=mView.findViewById(R.id.google);
-        github=mView.findViewById(R.id.github);
+//        google=mView.findViewById(R.id.google);
 
         email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent email = new Intent(Intent.ACTION_SEND);
-                email.putExtra(Intent.EXTRA_EMAIL, new String[]{"amsavarthan.a@gmail.com"});
-                email.putExtra(Intent.EXTRA_SUBJECT, "Sent from Hify ( "+ Build.BRAND+"("+Build.VERSION.SDK_INT+") )");
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{"anukrit.jain@gmail.com"});
+                email.putExtra(Intent.EXTRA_SUBJECT, "Sent from S.P.I.T ( "+ Build.BRAND+"("+Build.VERSION.SDK_INT+") )");
                 email.putExtra(Intent.EXTRA_TEXT, "");
                 email.setType("message/rfc822");
                 startActivity(Intent.createChooser(email, "Send using..."));
@@ -57,7 +55,7 @@ public class About extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String url = "http://lvamsavarthan.github.io/lvstore";
+                String url = "https://www.spit.ac.in";
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
@@ -65,7 +63,7 @@ public class About extends Fragment {
             }
         });
 
-        instagram.setOnClickListener(new View.OnClickListener() {
+        /*instagram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -75,9 +73,9 @@ public class About extends Fragment {
                 startActivity(i);
 
             }
-        });
+        });*/
 
-        google.setOnClickListener(new View.OnClickListener() {
+        /*google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -87,9 +85,9 @@ public class About extends Fragment {
                 startActivity(i);
 
             }
-        });
+        });*/
 
-        github.setOnClickListener(new View.OnClickListener() {
+        /*github.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -100,7 +98,7 @@ public class About extends Fragment {
 
             }
         });
-
+*/
 
     }
 
