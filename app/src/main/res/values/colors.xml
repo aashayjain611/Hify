@@ -15,4 +15,7 @@
     <color name="black_bottom">#414141</color>
     <color name="black_top">#313131</color>
 
+    <color name="splashColor">#ffffff</color>
+
+
 </resources>

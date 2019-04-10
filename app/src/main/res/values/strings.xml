@@ -64,5 +64,6 @@
     <string name="status">I am currently using my %s eye</string>
     <string name="ai_name">I am not named yet but i know that i am an Artificial Intelligence</string>
     <string name="ai_author_name">I was created by Sardar patel Institute of Technology</string>
+    <string name="title_activity_splash">SplashActivity</string>
 
 </resources>
