@@ -154,13 +154,13 @@
 
             <Button
                 android:id="@+id/sendNew"
-                android:layout_below="@id/send"
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/send"
+                android:layout_weight="1"
                 android:background="@drawable/input_light_white"
                 android:onClick="SendNew"
-                android:text="Send new Hify"
+                android:text="Send new "
                 android:textAllCaps="false"
                 android:textSize="15sp" />
 

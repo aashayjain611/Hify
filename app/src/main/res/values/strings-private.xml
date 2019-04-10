@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Hify.AI</string>
+    <string name="app_name">S.P.I.T Alumni Portal</string>
 
-    <string name="developer_name" translatable="false">Amsavarthan Lv</string>
-    <string name="email" translatable="false">amsavarthan.a@gmail.com</string>
+    <string name="developer_name" translatable="false">Sardar Patel Institute of Technology</string>
+    <string name="email" translatable="false">anukrit.jain@spit.ac.in</string>
     <string name="dummy_email" translatable="false">user@example.com</string>
 
 </resources>

@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="Welcome_message">Welcome to Hify</string>
+    <string name="Welcome_message">Welcome to S.P.I.T Alumni Portal</string>
     <string name="register_message">Create a new Account</string>
     <string name="loading_name">Loading Name...</string>
 
@@ -41,7 +41,7 @@
     <string name="username">\@username</string>
     <string name="dummy_location">Getting location</string>
     <string name="loading_username">\@loading...</string>
-    <string name="author_name">Amsavarthan Lv</string>
+    <string name="author_name">Sardar Patel Institute of Technology</string>
     <string name="select_from_gallery">Select from gallery</string>
     <string name="click_on_the_button_below_to_select_image_s">Click on the button below to select image(s)</string>
     <string name="insert_image_s">Insert Image(s)</string>
@@ -63,6 +63,6 @@
     <string name="edittext_hint">Enter your question here</string>
     <string name="status">I am currently using my %s eye</string>
     <string name="ai_name">I am not named yet but i know that i am an Artificial Intelligence</string>
-    <string name="ai_author_name">I was created by Amsavarthan Lv</string>
+    <string name="ai_author_name">I was created by Sardar patel Institute of Technology</string>
 
 </resources>
