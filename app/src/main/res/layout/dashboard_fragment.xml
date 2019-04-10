@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFF"
+    tools:ignore="MissingPrefix">
+
+    <com.tylersuehr.esr.EmptyStateRecyclerView
+        android:id="@+id/posts_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <ProgressBar
+        android:id="@+id/pbar"
+        android:indeterminate="true"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_gravity="center"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/friend_req_alert"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardMaxElevation="13dp"
+        app:cardElevation="7dp"
+        app:cardUseCompatPadding="true"
+        app:cardBackgroundColor="@color/colorAccentt"
+        android:foreground="?selectableItemBackground"
+        android:layout_gravity="center_horizontal"
+        app:cardCornerRadius="20dp"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/friend_req_alert_text"
+            android:padding="16dp"
+            android:textColor="#FFF"
+            android:text="@string/you_have_d_new_friend_request_s"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>
