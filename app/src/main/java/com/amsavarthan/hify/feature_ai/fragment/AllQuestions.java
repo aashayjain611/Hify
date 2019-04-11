@@ -9,11 +9,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,11 +27,11 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.tylersuehr.esr.EmptyStateRecyclerView;
-import com.tylersuehr.esr.ImageTextStateDisplay;
 import com.tylersuehr.esr.TextStateDisplay;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AllQuestions extends Fragment{
 
@@ -43,7 +41,6 @@ public class AllQuestions extends Fragment{
     private FirebaseFirestore mFirestore;
     private FirebaseUser mCurrentUser;
     private QuestionAdapter adapter;
-    private static String TAG=AllQuestions.class.getSimpleName();
     private List<AllQuestionsModel> allQuestionsModelList =new ArrayList<>();
     private View view;
     private TextView et0,et1,et2,et3,et4,et5,et6,et7,et8,et9,et10,et11,et12,et13;
@@ -111,7 +108,7 @@ public class AllQuestions extends Fragment{
 
         Query firstQuery = mFirestore.collection("Questions")
                 .orderBy("timestamp", Query.Direction.DESCENDING);
-        firstQuery.addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
+        firstQuery.addSnapshotListener(Objects.requireNonNull(getActivity()), new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
 
@@ -123,7 +120,7 @@ public class AllQuestions extends Fragment{
 
                         if (doc.getType() == DocumentChange.Type.ADDED) {
 
-                            if (!doc.getDocument().getString("id").equals(mCurrentUser.getUid())) {
+                            if (!Objects.equals(doc.getDocument().getString("id"), mCurrentUser.getUid())) {
                                 AllQuestionsModel question = doc.getDocument().toObject(AllQuestionsModel.class).withId(doc.getDocument().getId());
                                 allQuestionsModelList.add(question);
                                 adapter.notifyDataSetChanged();
@@ -176,7 +173,7 @@ public class AllQuestions extends Fragment{
             Query firstQuery = mFirestore.collection("Questions")
                     .whereEqualTo("subject",subject)
                     .orderBy("timestamp", Query.Direction.DESCENDING);
-            firstQuery.addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
+            firstQuery.addSnapshotListener(Objects.requireNonNull(getActivity()), new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
 
@@ -188,7 +185,7 @@ public class AllQuestions extends Fragment{
 
                                 if (doc.getType() == DocumentChange.Type.ADDED) {
 
-                                    if (!doc.getDocument().getString("id").equals(mCurrentUser.getUid())) {
+                                    if (!Objects.equals(doc.getDocument().getString("id"), mCurrentUser.getUid())) {
                                         AllQuestionsModel question = doc.getDocument().toObject(AllQuestionsModel.class).withId(doc.getDocument().getId());
                                         allQuestionsModelList.add(question);
                                         adapter.notifyDataSetChanged();

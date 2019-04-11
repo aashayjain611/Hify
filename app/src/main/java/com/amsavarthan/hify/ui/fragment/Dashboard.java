@@ -28,7 +28,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -39,6 +38,7 @@ import com.tylersuehr.esr.TextStateDisplay;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.amsavarthan.hify.ui.activities.MainActivity.currentuser;
 import static com.amsavarthan.hify.ui.activities.MainActivity.showFragment;
@@ -53,14 +53,12 @@ public class Dashboard extends Fragment {
     private EmptyStateRecyclerView mPostsRecyclerView;
     private PostsAdapter mAdapter;
     private View mView;
-    private List<String> mFriendIdList=new ArrayList<>();
-    private View statsheetView;
-    private BottomSheetDialog mmBottomSheetDialog;
+//    private List<String> mFriendIdList=new ArrayList<>();
     private ProgressBar pbar;
     private CardView request_alert;
     private TextView request_alert_text;
-    private DocumentSnapshot lastVisible;
-    private boolean isFirstPageFirstLoad=true;
+//    private DocumentSnapshot lastVisible;
+//    private boolean isFirstPageFirstLoad=true;
     private PostsAdapter_v19 mAdapter_v19;
 
     @Nullable
@@ -94,8 +92,8 @@ public class Dashboard extends Fragment {
         request_alert.setVisibility(View.GONE);
 
 
-        statsheetView = ((AppCompatActivity)getActivity()).getLayoutInflater().inflate(R.layout.stat_bottom_sheet_dialog, null);
-        mmBottomSheetDialog = new BottomSheetDialog(view.getContext());
+        View statsheetView = ((AppCompatActivity) getActivity()).getLayoutInflater().inflate(R.layout.stat_bottom_sheet_dialog, null);
+        BottomSheetDialog mmBottomSheetDialog = new BottomSheetDialog(view.getContext());
         mmBottomSheetDialog.setContentView(statsheetView);
         mmBottomSheetDialog.setCanceledOnTouchOutside(true);
         mPostsRecyclerView = view.findViewById(R.id.posts_recyclerview);
@@ -149,7 +147,7 @@ public class Dashboard extends Fragment {
     public void checkFriendRequest(){
 
         mFirestore.collection("Users")
-                .document(mAuth.getCurrentUser().getUid())
+                .document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid())
                 .collection("Friend_Requests")
                 .addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
                     @Override
@@ -160,6 +158,7 @@ public class Dashboard extends Fragment {
                             return;
                         }
 
+                        assert queryDocumentSnapshots != null;
                         if(!queryDocumentSnapshots.isEmpty()){
                             try {
                                 request_alert_text.setText(String.format(getString(R.string.you_have_d_new_friend_request_s), queryDocumentSnapshots.size()));
@@ -179,7 +178,7 @@ public class Dashboard extends Fragment {
                                         if (currentuser.isEmailVerified()) {
                                             toolbar.setTitle("Manage Friends");
                                             try {
-                                                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Manage Friends");
+                                                Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Manage Friends");
                                             } catch (Exception e) {
                                                 Log.e("Error", e.getMessage());
                                             }
@@ -214,7 +213,7 @@ public class Dashboard extends Fragment {
                             return;
                         }
 
-                        if (!queryDocumentSnapshots.isEmpty()) {
+                        if (!Objects.requireNonNull(queryDocumentSnapshots).isEmpty()) {
 
                             for (final DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
 
@@ -288,257 +287,257 @@ public class Dashboard extends Fragment {
 
     }
 
-    public void getPosts() {
-
-        mFirestore.collection("Posts")
-                .orderBy("timestamp", Query.Direction.DESCENDING)
-                .limit(7)
-                .addSnapshotListener(getActivity(),new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
-
-                        if(e!=null){
-                            pbar.setVisibility(View.GONE);
-                            mPostsRecyclerView.invokeState(EmptyStateRecyclerView.STATE_ERROR);
-                            Log.w("Error", "listen:error", e);
-                            return;
-                        }
-
-                        if (!queryDocumentSnapshots.isEmpty()) {
-
-                            if(isFirstPageFirstLoad){
-                                lastVisible=queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
-                                mPostsList.clear();
-                            }
-
-                            for (final DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-
-                                if (doc.getType() == DocumentChange.Type.ADDED) {
-
-                                    if(isFirstPageFirstLoad) {
-
-                                        mFirestore.collection("Users")
-                                                .document(currentUser.getUid())
-                                                .collection("Friends")
-                                                .get()
-                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                                    @Override
-                                                    public void onSuccess(QuerySnapshot querySnapshot) {
-
-                                                        if (!querySnapshot.isEmpty()) {
-
-                                                            for (DocumentChange documentChange : querySnapshot.getDocumentChanges()) {
-
-                                                                if (documentChange.getType() == DocumentChange.Type.ADDED) {
-
-                                                                    if (documentChange.getDocument().get("id").equals(doc.getDocument().get("userId"))) {
-
-                                                                        Post post = doc.getDocument().toObject(Post.class).withId(doc.getDocument().getId());
-                                                                        mPostsList.add(post);
-                                                                        if(Build.VERSION.SDK_INT<=19) {
-                                                                            mAdapter_v19.notifyDataSetChanged();
-                                                                        }else{
-                                                                            mAdapter.notifyDataSetChanged();
-                                                                        }
-                                                                        pbar.setVisibility(View.GONE);
-
-                                                                    }
-                                                                }
-
-                                                            }
-
-                                                            if (mPostsList.isEmpty()) {
-                                                                pbar.setVisibility(View.GONE);
-                                                            }
-
-                                                        } else {
-
-                                                            pbar.setVisibility(View.GONE);
-                                                            if (mPostsList.isEmpty()) {
-                                                                pbar.setVisibility(View.GONE);
-                                                            }
-                                                        }
-
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        pbar.setVisibility(View.GONE);
-                                                        mPostsRecyclerView.invokeState(EmptyStateRecyclerView.STATE_ERROR);
-                                                        Log.w("Error", "listen:error", e);
-                                                    }
-                                                });
-
-                                    }else{
-
-                                        mFirestore.collection("Users")
-                                                .document(currentUser.getUid())
-                                                .collection("Friends")
-                                                .get()
-                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                                    @Override
-                                                    public void onSuccess(QuerySnapshot querySnapshot) {
-
-                                                        if (!querySnapshot.isEmpty()) {
-
-                                                            for (DocumentChange documentChange : querySnapshot.getDocumentChanges()) {
-
-                                                                if (documentChange.getType() == DocumentChange.Type.ADDED) {
-
-                                                                    if (documentChange.getDocument().getId().equals(doc.getDocument().get("userId"))) {
-
-                                                                        Post post = doc.getDocument().toObject(Post.class).withId(doc.getDocument().getId());
-                                                                        mPostsList.add(0,post);
-                                                                        pbar.setVisibility(View.GONE);
-                                                                        if(Build.VERSION.SDK_INT<=19) {
-                                                                            mAdapter_v19.notifyDataSetChanged();
-                                                                        }else{
-                                                                            mAdapter.notifyDataSetChanged();
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-
-                                                            if (mPostsList.isEmpty()) {
-                                                                pbar.setVisibility(View.GONE);
-                                                            }
-
-                                                        } else {
-
-                                                            pbar.setVisibility(View.GONE);
-
-                                                            if (mPostsList.isEmpty()) {
-                                                                pbar.setVisibility(View.GONE);
-                                                            }
-                                                        }
-
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        pbar.setVisibility(View.GONE);
-                                                        mPostsRecyclerView.invokeState(EmptyStateRecyclerView.STATE_ERROR);
-                                                        Log.w("Error", "listen:error", e);
-                                                    }
-                                                });
-
-                                    }
-                                }
-
-                            }
-                            isFirstPageFirstLoad=false;
-
-                        }else{
-                            if(mPostsList.isEmpty())
-                            {
-                                pbar.setVisibility(View.GONE);
-                            }
-                        }
-
-
-                    }
-                });
-
-    }
-
-    public void loadMorePost() {
-
-        mFirestore.collection("Posts")
-                .orderBy("timestamp", Query.Direction.DESCENDING)
-                .startAfter(lastVisible)
-                .limit(5)
-                .addSnapshotListener(getActivity(),new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
-
-                        if(e!=null){
-                            pbar.setVisibility(View.GONE);
-                            mPostsRecyclerView.invokeState(EmptyStateRecyclerView.STATE_ERROR);
-                            Log.w("Error", "listen:error", e);
-                            return;
-                        }
-
-                        if (!queryDocumentSnapshots.isEmpty()) {
-
-                            lastVisible=queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
-                            for (final DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-
-                                if (doc.getType() == DocumentChange.Type.ADDED) {
-
-                                    mFirestore.collection("Users")
-                                            .document(currentUser.getUid())
-                                            .collection("Friends")
-                                            .get()
-                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                                @Override
-                                                public void onSuccess(QuerySnapshot querySnapshot) {
-
-                                                    if (!querySnapshot.isEmpty()) {
-
-                                                        for (DocumentChange documentChange : querySnapshot.getDocumentChanges()) {
-
-                                                            if (documentChange.getType() == DocumentChange.Type.ADDED) {
-
-                                                                if (documentChange.getDocument().getId().equals(doc.getDocument().get("userId"))) {
-
-                                                                    Post post = doc.getDocument().toObject(Post.class).withId(doc.getDocument().getId());
-                                                                    mPostsList.add(post);
-                                                                    if(Build.VERSION.SDK_INT<=19) {
-                                                                        mAdapter_v19.notifyDataSetChanged();
-                                                                    }else{
-                                                                        mAdapter.notifyDataSetChanged();
-                                                                    }
-                                                                    pbar.setVisibility(View.GONE);
-
-                                                                }
-                                                            }
-                                                        }
-
-
-
-                                                        if (mPostsList.isEmpty()) {
-                                                            pbar.setVisibility(View.GONE);
-                                                        }
-
-
-                                                    } else {
-
-                                                        pbar.setVisibility(View.GONE);
-                                                        if (mPostsList.isEmpty()) {
-                                                            pbar.setVisibility(View.GONE);
-                                                        }
-
-                                                    }
-
-
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    pbar.setVisibility(View.GONE);
-                                                    mPostsRecyclerView.invokeState(EmptyStateRecyclerView.STATE_ERROR);
-                                                    Log.w("Error", "listen:error", e);
-                                                }
-                                            });
-                                }
-
-                            }
-
-                        }else{
-                            if(mPostsList.isEmpty())
-                            {
-                                pbar.setVisibility(View.GONE);
-                            }
-                        }
-
-                    }
-                });
-
-
-    }
+//    public void getPosts() {
+//
+//        mFirestore.collection("Posts")
+//                .orderBy("timestamp", Query.Direction.DESCENDING)
+//                .limit(7)
+//                .addSnapshotListener(getActivity(),new EventListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+//
+//                        if(e!=null){
+//                            pbar.setVisibility(View.GONE);
+//                            mPostsRecyclerView.invokeState(EmptyStateRecyclerView.STATE_ERROR);
+//                            Log.w("Error", "listen:error", e);
+//                            return;
+//                        }
+//
+//                        if (!Objects.requireNonNull(queryDocumentSnapshots).isEmpty()) {
+//
+//                            if(isFirstPageFirstLoad){
+//                                lastVisible=queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+//                                mPostsList.clear();
+//                            }
+//
+//                            for (final DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+//
+//                                if (doc.getType() == DocumentChange.Type.ADDED) {
+//
+//                                    if(isFirstPageFirstLoad) {
+//
+//                                        mFirestore.collection("Users")
+//                                                .document(currentUser.getUid())
+//                                                .collection("Friends")
+//                                                .get()
+//                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                                                    @Override
+//                                                    public void onSuccess(QuerySnapshot querySnapshot) {
+//
+//                                                        if (!querySnapshot.isEmpty()) {
+//
+//                                                            for (DocumentChange documentChange : querySnapshot.getDocumentChanges()) {
+//
+//                                                                if (documentChange.getType() == DocumentChange.Type.ADDED) {
+//
+//                                                                    if (Objects.equals(documentChange.getDocument().get("id"), doc.getDocument().get("userId"))) {
+//
+//                                                                        Post post = doc.getDocument().toObject(Post.class).withId(doc.getDocument().getId());
+//                                                                        mPostsList.add(post);
+//                                                                        if(Build.VERSION.SDK_INT<=19) {
+//                                                                            mAdapter_v19.notifyDataSetChanged();
+//                                                                        }else{
+//                                                                            mAdapter.notifyDataSetChanged();
+//                                                                        }
+//                                                                        pbar.setVisibility(View.GONE);
+//
+//                                                                    }
+//                                                                }
+//
+//                                                            }
+//
+//                                                            if (mPostsList.isEmpty()) {
+//                                                                pbar.setVisibility(View.GONE);
+//                                                            }
+//
+//                                                        } else {
+//
+//                                                            pbar.setVisibility(View.GONE);
+//                                                            if (mPostsList.isEmpty()) {
+//                                                                pbar.setVisibility(View.GONE);
+//                                                            }
+//                                                        }
+//
+//                                                    }
+//                                                })
+//                                                .addOnFailureListener(new OnFailureListener() {
+//                                                    @Override
+//                                                    public void onFailure(@NonNull Exception e) {
+//                                                        pbar.setVisibility(View.GONE);
+//                                                        mPostsRecyclerView.invokeState(EmptyStateRecyclerView.STATE_ERROR);
+//                                                        Log.w("Error", "listen:error", e);
+//                                                    }
+//                                                });
+//
+//                                    }else{
+//
+//                                        mFirestore.collection("Users")
+//                                                .document(currentUser.getUid())
+//                                                .collection("Friends")
+//                                                .get()
+//                                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                                                    @Override
+//                                                    public void onSuccess(QuerySnapshot querySnapshot) {
+//
+//                                                        if (!querySnapshot.isEmpty()) {
+//
+//                                                            for (DocumentChange documentChange : querySnapshot.getDocumentChanges()) {
+//
+//                                                                if (documentChange.getType() == DocumentChange.Type.ADDED) {
+//
+//                                                                    if (documentChange.getDocument().getId().equals(doc.getDocument().get("userId"))) {
+//
+//                                                                        Post post = doc.getDocument().toObject(Post.class).withId(doc.getDocument().getId());
+//                                                                        mPostsList.add(0,post);
+//                                                                        pbar.setVisibility(View.GONE);
+//                                                                        if(Build.VERSION.SDK_INT<=19) {
+//                                                                            mAdapter_v19.notifyDataSetChanged();
+//                                                                        }else{
+//                                                                            mAdapter.notifyDataSetChanged();
+//                                                                        }
+//                                                                    }
+//                                                                }
+//                                                            }
+//
+//                                                            if (mPostsList.isEmpty()) {
+//                                                                pbar.setVisibility(View.GONE);
+//                                                            }
+//
+//                                                        } else {
+//
+//                                                            pbar.setVisibility(View.GONE);
+//
+//                                                            if (mPostsList.isEmpty()) {
+//                                                                pbar.setVisibility(View.GONE);
+//                                                            }
+//                                                        }
+//
+//                                                    }
+//                                                })
+//                                                .addOnFailureListener(new OnFailureListener() {
+//                                                    @Override
+//                                                    public void onFailure(@NonNull Exception e) {
+//                                                        pbar.setVisibility(View.GONE);
+//                                                        mPostsRecyclerView.invokeState(EmptyStateRecyclerView.STATE_ERROR);
+//                                                        Log.w("Error", "listen:error", e);
+//                                                    }
+//                                                });
+//
+//                                    }
+//                                }
+//
+//                            }
+//                            isFirstPageFirstLoad=false;
+//
+//                        }else{
+//                            if(mPostsList.isEmpty())
+//                            {
+//                                pbar.setVisibility(View.GONE);
+//                            }
+//                        }
+//
+//
+//                    }
+//                });
+//
+//    }
+
+//    public void loadMorePost() {
+//
+//        mFirestore.collection("Posts")
+//                .orderBy("timestamp", Query.Direction.DESCENDING)
+//                .startAfter(lastVisible)
+//                .limit(5)
+//                .addSnapshotListener(getActivity(),new EventListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+//
+//                        if(e!=null){
+//                            pbar.setVisibility(View.GONE);
+//                            mPostsRecyclerView.invokeState(EmptyStateRecyclerView.STATE_ERROR);
+//                            Log.w("Error", "listen:error", e);
+//                            return;
+//                        }
+//
+//                        if (!Objects.requireNonNull(queryDocumentSnapshots).isEmpty()) {
+//
+//                            lastVisible=queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+//                            for (final DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+//
+//                                if (doc.getType() == DocumentChange.Type.ADDED) {
+//
+//                                    mFirestore.collection("Users")
+//                                            .document(currentUser.getUid())
+//                                            .collection("Friends")
+//                                            .get()
+//                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                                                @Override
+//                                                public void onSuccess(QuerySnapshot querySnapshot) {
+//
+//                                                    if (!querySnapshot.isEmpty()) {
+//
+//                                                        for (DocumentChange documentChange : querySnapshot.getDocumentChanges()) {
+//
+//                                                            if (documentChange.getType() == DocumentChange.Type.ADDED) {
+//
+//                                                                if (documentChange.getDocument().getId().equals(doc.getDocument().get("userId"))) {
+//
+//                                                                    Post post = doc.getDocument().toObject(Post.class).withId(doc.getDocument().getId());
+//                                                                    mPostsList.add(post);
+//                                                                    if(Build.VERSION.SDK_INT<=19) {
+//                                                                        mAdapter_v19.notifyDataSetChanged();
+//                                                                    }else{
+//                                                                        mAdapter.notifyDataSetChanged();
+//                                                                    }
+//                                                                    pbar.setVisibility(View.GONE);
+//
+//                                                                }
+//                                                            }
+//                                                        }
+//
+//
+//
+//                                                        if (mPostsList.isEmpty()) {
+//                                                            pbar.setVisibility(View.GONE);
+//                                                        }
+//
+//
+//                                                    } else {
+//
+//                                                        pbar.setVisibility(View.GONE);
+//                                                        if (mPostsList.isEmpty()) {
+//                                                            pbar.setVisibility(View.GONE);
+//                                                        }
+//
+//                                                    }
+//
+//
+//                                                }
+//                                            })
+//                                            .addOnFailureListener(new OnFailureListener() {
+//                                                @Override
+//                                                public void onFailure(@NonNull Exception e) {
+//                                                    pbar.setVisibility(View.GONE);
+//                                                    mPostsRecyclerView.invokeState(EmptyStateRecyclerView.STATE_ERROR);
+//                                                    Log.w("Error", "listen:error", e);
+//                                                }
+//                                            });
+//                                }
+//
+//                            }
+//
+//                        }else{
+//                            if(mPostsList.isEmpty())
+//                            {
+//                                pbar.setVisibility(View.GONE);
+//                            }
+//                        }
+//
+//                    }
+//                });
+//
+//
+//    }
 
     public void showDialog(){
 
@@ -551,7 +550,7 @@ public class Dashboard extends Fragment {
                 .onPositive(new BottomDialog.ButtonCallback() {
                     @Override
                     public void onClick(@NonNull final BottomDialog dialog) {
-                        mAuth.getCurrentUser().sendEmailVerification()
+                        Objects.requireNonNull(mAuth.getCurrentUser()).sendEmailVerification()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {

@@ -13,10 +13,6 @@ import android.widget.LinearLayout;
 
 import com.amsavarthan.hify.R;
 
-/**
- * Created by amsavarthan on 29/3/18.
- */
-
 public class About extends Fragment {
 
     View mView;

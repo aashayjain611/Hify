@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                                     if(!override) {
-                                        if (Objects.equals(documentSnapshot.getString("token_id"), token_id) || documentSnapshot.getString("token_id").equals("")) {
+                                        if (Objects.equals(documentSnapshot.getString("token_id"), token_id) || Objects.equals(documentSnapshot.getString("token_id"), "")) {
 
                                             Map<String, Object> tokenMap = new HashMap<>();
                                             tokenMap.put("token_id", token_id);
@@ -309,10 +309,10 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                     } else {
-                        if (task.getException().getMessage().contains("The password is invalid")) {
+                        if (Objects.requireNonNull(task.getException()).getMessage().contains("The password is invalid")) {
                             Toast.makeText(LoginActivity.this, "Error: The password you have entered is invalid.", Toast.LENGTH_SHORT).show();
                             mDialog.dismiss();
-                        } else if (task.getException().getMessage().contains("There is no user record")) {
+                        } else if (Objects.requireNonNull(task.getException()).getMessage().contains("There is no user record")) {
                             Toast.makeText(LoginActivity.this, "Error: Invalid user, Please register using the button below.", Toast.LENGTH_SHORT).show();
                             mDialog.dismiss();
                         } else {

@@ -110,6 +110,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -170,7 +171,6 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
     public static Toolbar toolbar;
     private MenuItem add_post,refresh;
     private boolean mState=true;
-    private EmptyStateRecyclerView recentsRecyclerView;
     ArrayList<Recents> recentsList;
     RecentsAdapter recentsAdapter;
     private FrameLayout search_container;
@@ -179,6 +179,14 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
     private MenuItem searchViewItem;
     private boolean mStateForum=false;
     private MenuItem add_question;
+
+    private String usernam;
+    private String nam;
+    private String emai;
+    private String imag;
+    private String bi;
+    private String loc;
+    private String password;
 
     public static void startActivity(Context context) {
         Intent intent=new Intent(context,MainActivity.class);
@@ -280,7 +288,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
                 toolbar.setTitle("Dashboard");
                 try {
-                    getSupportActionBar().setTitle("Dashboard");
+                    Objects.requireNonNull(getSupportActionBar()).setTitle("Dashboard");
                 } catch (Exception e) {
                     Log.e("Error", e.getMessage());
                 }
@@ -311,7 +319,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
         setSupportActionBar(toolbar);
         toolbar.setTitle("Dashboard");
         try {
-            getSupportActionBar().setTitle("Dashboard");
+            Objects.requireNonNull(getSupportActionBar()).setTitle("Dashboard");
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
         }
@@ -413,7 +421,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
     private void setRecentsView() {
 
         search_container=findViewById(R.id.search_container);
-        recentsRecyclerView = findViewById(R.id.recentsView);
+        EmptyStateRecyclerView recentsRecyclerView = findViewById(R.id.recentsView);
         recentsList = new ArrayList<>();
         recentsAdapter = new RecentsAdapter(recentsList);
 
@@ -489,7 +497,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 .onPositive(new BottomDialog.ButtonCallback() {
                     @Override
                     public void onClick(@NonNull final BottomDialog dialog) {
-                        mAuth.getCurrentUser().sendEmailVerification()
+                        Objects.requireNonNull(mAuth.getCurrentUser()).sendEmailVerification()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
@@ -525,7 +533,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
             case POS_DASHBOARD:
                 toolbar.setTitle("Dashboard");
                 try {
-                    getSupportActionBar().setTitle("Dashboard");
+                    Objects.requireNonNull(getSupportActionBar()).setTitle("Dashboard");
                 }catch (Exception e){
                     Log.e("Error",e.getMessage());
                 }
@@ -568,7 +576,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
             case POS_FORUM:
                 toolbar.setTitle("Forum");
                 try {
-                    getSupportActionBar().setTitle("Forum");
+                    Objects.requireNonNull(getSupportActionBar()).setTitle("Forum");
                 }catch (Exception e){
                     Log.e("Error",e.getMessage());
                 }
@@ -613,7 +621,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 if(currentuser.isEmailVerified()) {
                     toolbar.setTitle("Flash Messages");
                     try {
-                        getSupportActionBar().setTitle("Flash Messages");
+                        Objects.requireNonNull(getSupportActionBar()).setTitle("Flash Messages");
                     } catch (Exception e) {
                         Log.e("Error", e.getMessage());
                     }
@@ -661,7 +669,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 if(currentuser.isEmailVerified()) {
                     toolbar.setTitle("Manage Friends");
                     try {
-                        getSupportActionBar().setTitle("Manage Friends");
+                        Objects.requireNonNull(getSupportActionBar()).setTitle("Manage Friends");
                     } catch (Exception e) {
                         Log.e("Error", e.getMessage());
                     }
@@ -708,7 +716,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
                 if(currentuser.isEmailVerified()) {
                     toolbar.setTitle("About");
                     try {
-                        getSupportActionBar().setTitle("About");
+                        Objects.requireNonNull(getSupportActionBar()).setTitle("About");
                     } catch (Exception e) {
                         Log.e("Error", e.getMessage());
                     }
@@ -900,7 +908,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
             public void onReceive(Context context, Intent intent) {
                 Log.i("OnBroadcastReceiver", "received");
 
-               if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
+               if (Objects.equals(intent.getAction(), Config.PUSH_NOTIFICATION)) {
                     Log.i("OnBroadcastReceiver", "push_received");
 
                     String click_action = intent.getStringExtra("click_action");
@@ -1079,13 +1087,16 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
             Cursor rc =userHelper.getData(1);
             rc.moveToFirst();
 
-            final String nam = rc.getString(rc.getColumnIndex(UserHelper.CONTACTS_COLUMN_NAME));
-            final String emai = rc.getString(rc.getColumnIndex(UserHelper.CONTACTS_COLUMN_EMAIL));
-            final String imag = rc.getString(rc.getColumnIndex(UserHelper.CONTACTS_COLUMN_IMAGE));
-            final String password = rc.getString(rc.getColumnIndex(UserHelper.CONTACTS_COLUMN_PASS));
-            final String usernam = rc.getString(rc.getColumnIndex(UserHelper.CONTACTS_COLUMN_USERNAME));
-            final String loc = rc.getString(rc.getColumnIndex(UserHelper.CONTACTS_COLUMN_LOCATION));
-            final String bi = rc.getString(rc.getColumnIndex(UserHelper.CONTACTS_COLUMN_BIO));
+            while (rc.moveToNext())
+            {
+                nam = rc.getString(rc.getColumnIndex(UserHelper.CONTACTS_COLUMN_NAME));
+                emai = rc.getString(rc.getColumnIndex(UserHelper.CONTACTS_COLUMN_EMAIL));
+                imag = rc.getString(rc.getColumnIndex(UserHelper.CONTACTS_COLUMN_IMAGE));
+                password = rc.getString(rc.getColumnIndex(UserHelper.CONTACTS_COLUMN_PASS));
+                usernam = rc.getString(rc.getColumnIndex(UserHelper.CONTACTS_COLUMN_USERNAME));
+                loc = rc.getString(rc.getColumnIndex(UserHelper.CONTACTS_COLUMN_LOCATION));
+                bi = rc.getString(rc.getColumnIndex(UserHelper.CONTACTS_COLUMN_BIO));
+            }
 
             if(!rc.isClosed()){
                 rc.close();
@@ -1099,7 +1110,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
                     String image = documentSnapshot.getString("image");
                     final String email = documentSnapshot.getString("email");
                     String bio = documentSnapshot.getString("bio");
-                    String usrname = documentSnapshot.getString("username");
+//                    String usrname = documentSnapshot.getString("username");
                     String location = documentSnapshot.getString("location");
 
                     username.setText(name);
@@ -1109,7 +1120,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
                             .into(imageView);
 
 
-                    if (!image.equals(imag)) {
+                    if (!Objects.equals(image, imag)) {
                         storageReference.putFile(Uri.parse(imag)).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
@@ -1141,7 +1152,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
                         });
                     }
 
-                    if (!bio.equals(bi)) {
+                    if (!Objects.equals(bio, bi)) {
                         Map<String, Object> userMap = new HashMap<>();
                         userMap.put("bio", bi);
 
@@ -1155,7 +1166,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
                         });
                     }
 
-                    if (!location.equals(loc)) {
+                    if (!Objects.equals(location, loc)) {
                         Map<String, Object> userMap = new HashMap<>();
                         userMap.put("location", loc);
 
@@ -1169,7 +1180,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
                         });
                     }
 
-                    if (!name.equals(nam)) {
+                    if (!Objects.equals(name, nam)) {
                         Map<String, Object> userMap = new HashMap<>();
                         userMap.put("name", nam);
 
@@ -1184,14 +1195,12 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
                         });
                     }
 
-                    if (!currentuser.getEmail().equals(emai)) {
+                    if (!Objects.equals(currentuser.getEmail(), emai) && !TextUtils.isEmpty(password)) {
 
 
-                        credential = EmailAuthProvider
-                                .getCredential(currentuser.getEmail(), password);
+                        credential = EmailAuthProvider.getCredential(Objects.requireNonNull(currentuser.getEmail()), password);
 
-                        currentuser.reauthenticate(credential)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        currentuser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
 
@@ -1201,7 +1210,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
                                                 if (task.isSuccessful()) {
 
-                                                    if (!email.equals(emai)) {
+                                                    if (!Objects.equals(email, emai)) {
                                                         Map<String, Object> userMap = new HashMap<>();
                                                         userMap.put("email", emai);
 
@@ -1217,7 +1226,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
                                                 } else {
 
-                                                    Log.e("Update email error", task.getException().getMessage() + "..");
+                                                    Log.e("Update email error", Objects.requireNonNull(task.getException()).getMessage() + "..");
 
                                                 }
 
@@ -1244,6 +1253,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
     public boolean isOnline() {
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert cm != null;
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
@@ -1252,7 +1262,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
 
         toolbar.setTitle("My Profile");
         try {
-            getSupportActionBar().setTitle("My Profile");
+            Objects.requireNonNull(getSupportActionBar()).setTitle("My Profile");
         }catch (Exception e){
             Log.e("Error",e.getMessage());
         }
@@ -1291,7 +1301,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
             searchView=(SearchView)searchViewItem.getActionView();
         }
         if(searchView!=null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(MainActivity.this.getComponentName()));
+            searchView.setSearchableInfo(Objects.requireNonNull(searchManager).getSearchableInfo(MainActivity.this.getComponentName()));
             searchView.setQueryHint("Search Anything");
             searchView.setOnSearchClickListener(new View.OnClickListener() {
                 @Override

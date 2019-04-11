@@ -388,6 +388,14 @@ public class ProfileFragment extends Fragment {
         private TextView name,username,email,location,post,friend,bio;
         private CircleImageView profile_pic;
 
+        private String usernam;
+        private String nam;
+        private String emai;
+        private String imag;
+        private String bi;
+        private String loc;
+        private String pass;
+
         public AboutFragment() {
         }
 
@@ -426,12 +434,15 @@ public class ProfileFragment extends Fragment {
             Cursor rs = userHelper.getData(1);
             rs.moveToFirst();
 
-            String usernam=rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_USERNAME));
-            String nam = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_NAME));
-            String emai = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_EMAIL));
-            final String imag = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_IMAGE));
-            String loc=rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_LOCATION));
-            String bi=rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_BIO));
+            while(rs.moveToNext())
+            {
+                usernam=rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_USERNAME));
+                nam = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_NAME));
+                emai = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_EMAIL));
+                imag = rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_IMAGE));
+                loc=rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_LOCATION));
+                bi=rs.getString(rs.getColumnIndex(UserHelper.CONTACTS_COLUMN_BIO));
+            }
 
             if (!rs.isClosed()) {
                 rs.close();
