@@ -55,7 +55,7 @@
                         android:layout_marginEnd="10dp"
                         android:onClick="SelectImage"
                         android:padding="10dp"
-                        />
+                        android:textColor="#fff"/>
 
                     <TextView
                         android:id="@+id/picture"
@@ -64,7 +64,7 @@
                         android:background="@drawable/round_background"
                         android:text=" Change profile picture "
                         android:padding="10dp"
-                        />
+                        android:textColor="#fff"/>
 
                     <TextView
                         android:id="@+id/change_password"
@@ -76,7 +76,7 @@
                         android:text=" Change password "
                         android:onClick="SelectImage"
                         android:padding="10dp"
-                        />
+                        android:textColor="#fff"/>
 
 
                 </LinearLayout>

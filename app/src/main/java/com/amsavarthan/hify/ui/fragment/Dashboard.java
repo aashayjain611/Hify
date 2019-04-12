@@ -146,6 +146,8 @@ public class Dashboard extends Fragment {
 
     public void checkFriendRequest(){
 
+//        Log.e("Check", String.valueOf(mAuth.getCurrentUser() == null));
+
         mFirestore.collection("Users")
                 .document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid())
                 .collection("Friend_Requests")
